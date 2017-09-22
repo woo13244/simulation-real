@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import getFriends from '../../controller/controller'
+import {getFriends} from '../../controller/controller'
 export default class Dashboard extends Component {
     constructor(){
         super()
