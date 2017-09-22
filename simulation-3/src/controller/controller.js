@@ -1,4 +1,4 @@
-import axios from 'axios'
+//import axios from 'axios'
 
 module.exports={
     getFriends(req, res){
@@ -6,5 +6,7 @@ module.exports={
         db.getFriends().then(friends=>{
             res.send(friends)
         })
-    }
+    },
+
+   
 }

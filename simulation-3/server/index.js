@@ -15,6 +15,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+
 massive(process.env.CONNECTION_STRING)
 .then( db => {
     app.set('db', db)
@@ -74,6 +75,7 @@ app.get('/auth/logout', ( req, res ) => {
     req.logout();
     res.redirect(302, 'http://localhost:3000/')
 })
+
 
 const port = 3334;
 app.listen(port, () => console.log('Shipped docked at port', port))

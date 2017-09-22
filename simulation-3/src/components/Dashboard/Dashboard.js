@@ -17,9 +17,9 @@ export default class Dashboard extends Component {
         console.log(this.state.friends)
         return (
             <div>
-                c
+                
                 <div className="friends-container">
-                    {}
+                    {friendsList}
                 </div>
             </div>
         );
