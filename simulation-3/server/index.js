@@ -25,18 +25,34 @@ passport.use( new Auth0Strategy({
     callbackURL: process.env.AUTH_CALLBACK
 }, function(accessToken, refreshToken, extraParams, profile, done){
     //database
-    const db = app.get('db');
-        console.log('id',profile.identities[0].user_id )
-    db.get_user([profile.identities[0].user_id]).then( user => {
-        console.log('user', user)
-        if ( user[0] ) {
-            done(null, user[0].id)
-        } else {
-            db.create_user([profile.displayName, profile.emails[0].value, profile.picture, profile.identities[0].user_id]).then(user => {
-                done( null, user[0].id)
-            })
-        }
-    })
+    // const db = app.get('db');
+    //     console.log('id',profile.identities[0].user_id )
+    // db.get_user([profile.identities[0].user_id]).then( user => {
+    //     console.log('user', user)
+    //     if ( user[0] ) {
+    //         done(null, user[0].id)
+    //     } else {
+    //         db.create_user([profile.displayName, profile.emails[0].value, profile.picture, profile.identities[0].user_id]).then(user => {
+    //             done( null, user[0].id)
+    //         })
+    //     }
+    // })
 }))
+
+passport.serializeUser(function(userId, done){
+    done(null, userId)
+})
+
+passport.deserializeUser(function(userId, done){
+    done(null, userId)
+})
+
+app.get('/auth', passport.authenticate('auth0'));
+
+app.get('/auth/callback', passport.authenticate('auth0',{
+    successRedirect: 'http://localhost:3000/',
+    failureRedirect: 'http://localhost:3000/'
+}))
+
 const port = 3334;
 app.listen(port, () => console.log('Shipped docked at port', port))
