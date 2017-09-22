@@ -3,6 +3,7 @@ import Auth from './components/Login/Login.js'
 import Dashboard from './components/Dashboard/Dashboard.js'
 import {HashRouter, Route} from 'react-router-dom'
 import './App.css';
+// import index from './../server/index'
 
 class App extends Component {
   render() {

@@ -10,7 +10,9 @@ class Login extends Component {
         <div className='splash-screen'>
           <img className='' src={logo}/>
           <span className='name'>Helo</span>
+          <a href={process.env.REACT_APP_LOGIN}>
           <button>Login / Register</button>
+          </a>
         </div>
       </div>
 
