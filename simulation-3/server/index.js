@@ -4,7 +4,8 @@ const express = require('express')
     , massive = require('massive')
     , session = require('express-session')
     , passport = require('passport')
-    , Auth0Strategy = require('passport-auth0');
+    , Auth0Strategy = require('passport-auth0')
+    , cors = require('cors')
 
 const app = express();
 app.use(session({
@@ -14,7 +15,7 @@ app.use(session({
 }))
 app.use(passport.initialize());
 app.use(passport.session());
-
+// app.use(cors());
 
 massive(process.env.CONNECTION_STRING)
 .then( db => {
@@ -56,7 +57,7 @@ passport.deserializeUser(function(userId, done) {
 app.get('/auth', passport.authenticate('auth0'));
 
 app.get('/auth/callback', passport.authenticate('auth0',{
-    successRedirect: 'http://localhost:3000/#/Dashboard', 
+    successRedirect: 'http://localhost:3000/#/dashboard', 
     failureRedirect: '/auth'
 }))
 
@@ -74,6 +75,14 @@ app.get('/auth/user', (req, res) => {
 app.get('/auth/logout', ( req, res ) => {
     req.logout();
     res.redirect(302, 'http://localhost:3000/')
+})
+
+app.get('/api/friend/list', (req, res)=>{
+    app.get('db').getFriends([]).then( friends => {
+        res.send(friends)
+    }).catch(err => {
+        console.log(err)
+    })
 })
 
 

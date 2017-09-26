@@ -1,27 +1,45 @@
 import React, { Component } from 'react';
-import {getFriends} from '../../controller/controller'
-export default class Dashboard extends Component {
+import {getFriends} from '../../ducks/user.js'
+import {connect} from 'react-redux';
+import axios from 'axios'
+
+ class Dashboard extends Component {
     constructor(){
         super()
         this.state={
             friends:[]
-        }
+        } 
     }
-    componentDidMount(){
-        this.setState({
-            friends: [...this.state.friends, getFriends]
-        })
+    componentDidMount(){   console.log('his') 
+        axios.get('/api/friend/list').then(response=>{
+            console.log('lkjfadlskjfasdlk')
+            this.setState({
+                friends: response.data
+            })
+           
+       })
+   
     }
     render() {
-        const friendsList=this.state.friends
-        console.log(this.state.friends)
+        const friendmapper = this.state.friends.map(function(x){
+            return (<div><li>{x.firstname}</li></div>)
+        })
         return (
             <div>
-                
                 <div className="friends-container">
-                    {friendsList}
+                    <ul>{friendmapper}</ul>
+                    'blah'
                 </div>
             </div>
         );
     }
 }
+
+
+function mapStateToProps(state){
+    return{
+        friends: state.friends
+    }
+}
+
+export default connect(mapStateToProps,{getFriends})(Dashboard)
